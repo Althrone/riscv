@@ -63,11 +63,11 @@ module csr
                 csrs[`CSR_MCYCLE_ADDR]<=64'b0;
                 csrs[`CSR_MCYCLEH_ADDR]<=64'b0;
             end else begin
-                if(csrs[12'hB00][31:0]==32'hFFFF) begin
-                    csrs[12'hB00]<=64'b0;
-                    csrs[12'hB80]<=csrs[12'hB80]+1'b1;
+                if(csrs[`CSR_MCYCLE_ADDR][31:0]==32'hFFFF) begin
+                    csrs[`CSR_MCYCLE_ADDR]<=64'b0;
+                    csrs[`CSR_MCYCLEH_ADDR]<=csrs[`CSR_MCYCLEH_ADDR]+1'b1;
                 end else begin
-                    csrs[12'hB00]<=csrs[12'hB00]+1'b1;
+                    csrs[`CSR_MCYCLE_ADDR]<=csrs[`CSR_MCYCLE_ADDR]+1'b1;
                 end
             end
         `else
@@ -76,19 +76,25 @@ module csr
 
     //组合逻辑
     always @ (*) begin
+        
+        //Machine Information Registers
+        //mvendorid 永远32位
+        csrs[`CSR_MVENDORID_ADDR]<=32'd0;//非商业实现
+        //marchid MXLEN-1
+        csrs[`CSR_MARCHID_ADDR]<=`MXLEN'b0;//架构编码未定
+        //mimpid MXLEN-1
+        csrs[`CSR_MIMPID_ADDR]<=`MXLEN'b0;//实现编码未定
+        //mhartid MXLEN-1
+        csrs[`CSR_MHARTID_ADDR]<=`MXLEN'b0;//只有一个0hart
+        //mconfigptr MXLEN-1
+        csrs[`CSR_MCONFIGPTR_ADDR]<=`MXLEN'b0;//配置数据结构不存在
+
+        //Machine Trap Setup
+        //mstatus
+        csrs[`CSR_MSTATUS_ADDR]<=`MXLEN'b0;//只有一个0hart
         //misa 长度可变
         //                                              zy xwvu tsrq ponm lkji hgfe dcba
         csrs[`CSR_MISA_ADDR]<={`MXL,`MXLEN-28{1'b0},26'b00_0000_0000_0000_0001_0000_0000}
-        //mvendorid 永远32位
-        csrs[`CSR_MVENDORID_ADDR]<=32'd0;//非商业实现
-        //marchid 长度可变
-        csrs[`CSR_MARCHID_ADDR]<=`MXLEN'b0;//架构编码未定
-        //mimpid 长度可变
-        csrs[`CSR_MIMPID_ADDR]<=`MXLEN'b0;//实现编码未定
-        //mhartid 长度可变
-        csrs[`CSR_MHARTID_ADDR]<=`MXLEN'b0;//只有一个0hart
-        //mstatus
-        csrs[`CSR_MSTATUS_ADDR]<=`MXLEN'b0;//只有一个0hart
 
         case (i_funct3)
             `INST_CSRRW: begin
