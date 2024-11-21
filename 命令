@@ -1,0 +1,2 @@
+iverilog -o wave tb/pc_tb.v pc.v
+gtkwave wave.vcd

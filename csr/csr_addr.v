@@ -199,7 +199,7 @@
 `endif
 `ifdef RV32
     `define CSR_PMPCFG15_ADDR   12'h3AF //MRW Physical memory protection configuration, RV32 only
-`endif.
+`endif
 `define CSR_PMPADDR0_ADDR   12'h3B0 //MRW Physical memory protection address register.
 `define CSR_PMPADDR1_ADDR   12'h3B1 //MRW Physical memory protection address register.
 `define CSR_PMPADDR2_ADDR   12'h3B2 //MRW Physical memory protection address register.

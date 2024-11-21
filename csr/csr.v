@@ -1,19 +1,20 @@
 `include "rv32i.v"
-`include "csr_cfg.v"
+`include "csr/csr_cfg.v"
+`include "csr/csr_addr.v"
 
 module csr
     (
-        input wire[11:0] i_csr_addr;//csr寄存器地址
-        input wire[4:0] i_rs1_addr_uimm;
-        input wire[4:0] i_rd_addr;
-        input wire[`MXLEN-1:0] i_rs1_data;
-        input wire[2:0] i_funct3;
-        input wire i_clk;
-        input wire i_nrst;//确保复位信号已经被同步了
+        input wire[11:0] i_csr_addr,//csr寄存器地址
+        input wire[4:0] i_rs1_addr_uimm,
+        input wire[4:0] i_rd_addr,
+        input wire[`MXLEN-1:0] i_rs1_data,
+        input wire[2:0] i_funct3,
+        input wire i_clk,
+        input wire i_nrst,//确保复位信号已经被同步了
 
         //to gpr
-        output reg [`MXLEN-1:0] o_rd_data;//给目标寄存器的数据
-        output reg[4:0] o_rd_addr;//目标寄存器地址
+        output reg [`MXLEN-1:0] o_rd_data,//给目标寄存器的数据
+        output reg[4:0] o_rd_addr//目标寄存器地址
     );
 
     //寄存器表
@@ -21,7 +22,7 @@ module csr
     (* ram_style = "block" *) reg[63:0] csrs[0:4095];
 
     //赋初始值
-    csrs[12'h301]=
+    // csrs[12'h301]=
 
     // //非特权csr
     // //Unprivileged Floating-Point CSRs
@@ -58,7 +59,7 @@ module csr
 
     //时序逻辑
     always @ (posedge i_clk) begin//每个clk上升沿就来看看
-        `ifedf RV32I
+        // `ifedf `RV32I
             if(i_nrst==1'b0) begin
                 csrs[`CSR_MCYCLE_ADDR]<=64'b0;
                 csrs[`CSR_MCYCLEH_ADDR]<=64'b0;
@@ -70,14 +71,17 @@ module csr
                     csrs[`CSR_MCYCLE_ADDR]<=csrs[`CSR_MCYCLE_ADDR]+1'b1;
                 end
             end
-        `else
-        `endif
+        // `else
+        // `endif
     end
 
     //组合逻辑
     always @ (*) begin
-        
-        //Machine Information Registers
+
+        //按照riscv-privileged-20211203.pdf 3.1排序
+
+        //misa                        ↓长度可变            zy xwvu tsrq ponm lkji hgfe dcba
+        csrs[`CSR_MISA_ADDR]<={`MXL,{`MXLEN-28{1'b0}},26'b00_0000_0000_0000_0001_0000_0000};
         //mvendorid 永远32位
         csrs[`CSR_MVENDORID_ADDR]<=32'd0;//非商业实现
         //marchid MXLEN-1
@@ -86,15 +90,29 @@ module csr
         csrs[`CSR_MIMPID_ADDR]<=`MXLEN'b0;//实现编码未定
         //mhartid MXLEN-1
         csrs[`CSR_MHARTID_ADDR]<=`MXLEN'b0;//只有一个0hart
+        //mstatus 这个应该放到时序逻辑？
+        //mtvec 这个应该放到时序逻辑？
+        //medeleg 异常委托寄存器，无S模式不实现
+        //mideleg 中断委托寄存器，无S模式不实现
+        //mip mie
+
+        //minstret//RV32 RV64都是64位，riscv-privileged p34 3.1.10
+        // mcycle//RV32 RV64都是64位
+        //mhpmcounter3–mhpmcounter31 //RV32 RV64都是64位 不用的话要实现读出来都是0
+        //mhpmevent3–mhpmevent31 //MXLEN- 不用的话要实现读出来都是0
+
+        //mcounteren
+        //mcountinhibit
+        // mscratch
+        // mepc
+        // mcause
+        // mtval
         //mconfigptr MXLEN-1
         csrs[`CSR_MCONFIGPTR_ADDR]<=`MXLEN'b0;//配置数据结构不存在
-
-        //Machine Trap Setup
-        //mstatus
-        csrs[`CSR_MSTATUS_ADDR]<=`MXLEN'b0;//只有一个0hart
-        //misa 长度可变
-        //                                              zy xwvu tsrq ponm lkji hgfe dcba
-        csrs[`CSR_MISA_ADDR]<={`MXL,`MXLEN-28{1'b0},26'b00_0000_0000_0000_0001_0000_0000}
+        //menvcfg menvcfgh
+        //mseccfg
+        //mtime mtimecmp//RV32 RV64都是64位
+        //pmpcfg0-15//物理内存保护
 
         case (i_funct3)
             `INST_CSRRW: begin
