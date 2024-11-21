@@ -34,7 +34,7 @@ module id (
 
     output reg[`MEM_DATA_BUS] o_imm,//立即数
 
-    output reg[`REG_ADDR_BUS]   o_rd_addr    // 输出目标寄存器地址
+    output reg[`REG_ADDR_BUS]   o_rd_addr,    // 输出目标寄存器地址
 
     // to csr
     output wire[11:0] o_csr_addr//csr的地址
@@ -46,6 +46,10 @@ module id (
     wire[4:0] rs1 = i_inst[19:15];
     wire[4:0] rs2_shamt = i_inst[24:20];
     //imm根据需要进行组合
+
+    //Table 24.1: RISC-V base opcode map, inst[1:0]=11
+    // wire[6:0] opcode = i_inst[6:0];
+
 always @(*) begin
     //继续向后续模块传递
 //    o_inst = i_inst;
@@ -57,6 +61,11 @@ always @(*) begin
     // o_op2=32'b0;
 
     o_imm=32'b0;
+
+    // case (param)
+    //     : 
+    //     default: 
+    // endcase
 
     case (opcode)
         `INST_R_TYPE: begin//R型指令

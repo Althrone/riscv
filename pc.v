@@ -1,41 +1,18 @@
-`timescale 1ns / 1ps
-//////////////////////////////////////////////////////////////////////////////////
-// Company: 
-// Engineer: 
-// 
-// Create Date: 2023/05/17 22:16:03
-// Design Name: 
-// Module Name: pc
-// Project Name: 
-// Target Devices: 
-// Tool Versions: 
-// Description: 
-// 
-// Dependencies: 
-// 
-// Revision:
-// Revision 0.01 - File Created
-// Additional Comments:
-// 
-//////////////////////////////////////////////////////////////////////////////////
+module pc(
+   input wire i_clk,
+   input wire i_nrst,
+   output reg[31:0] o_pc
+);
 
+always @(posedge i_clk) begin
 
-//module
-//pc(
-//    input wire i_clk,
-//    input wire i_nrst,
-//    output reg[31:0] o_pc
-//);
+   if(i_nrst==1'b0)
+       o_pc <= 32'b0;
+   else
+       o_pc <= o_pc+3'd4;
+end
 
-//always @(posedge i_clk) begin
-
-//    if(i_nrst==1'b0)
-//        o_pc <= 32'b0;
-//    else
-//        o_pc <= o_pc+3'd4;
-//end
-
-//endmodule
+endmodule
 
 //////////////////////////////////////////////////////
 
