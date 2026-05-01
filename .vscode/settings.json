@@ -1,5 +1,6 @@
 {
-    "verilog.linting.iverilog.includePath": [
-        "./"
-    ]
+    "verilog.linting.linter": "iverilog",
+    "verilog.linting.path": "C:\\iverilog\\bin",
+    "verilog.linting.slang.arguments": "-i",
+    "verilog.linting.iverilog.runAtFileLocation": true
 }

@@ -1,2 +1,14 @@
-iverilog -o wave tb/pc_tb.v pc.v
+iverilog -o wave pc_tb.v pc.v
+vvp -n wave -lxt2
 gtkwave wave.vcd
+gtkwave --rcvar "splash_disable 1" --rcvar "color_back FFFFFF" --rcvar "color_baseline 000000" --rcvar "color_time 000000" --rcvar "color_timeb FFFFFF" --rcvar "color_grid A0A0A0" --rcvar "color_grid2 888888" --rcvar "color_value 000000" wave.vcd
+
+color_back     FFFFFF    # 纯白背景
+color_baseline 000000    # 基线、文字改为黑色
+color_time     000000    # 时间文字黑色
+color_timeb    FFFFFF    # 时间背景白色（保持与背景一致）
+color_grid     A0A0A0    # 网格浅灰，不太刺眼
+color_grid2    888888    # 第二网格稍深一点灰色
+color_value    000000    # 值文字黑色
+
+python c:\\Users\\lizeyu\\.vscode\\extensions\\truecrab.verilog-testbench-instance-0.0.5\\out\\vTbgenerator.py e:\\riscv\\idu\\opdecode.v

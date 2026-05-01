@@ -1,0 +1,13 @@
+<mxfile host="65bd71144e">
+    <diagram id="rqatVq7NdOueRoCgrMgU" name="Page-1">
+        <mxGraphModel dx="807" dy="428" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="850" pageHeight="1100" math="0" shadow="0">
+            <root>
+                <mxCell id="0"/>
+                <mxCell id="1" parent="0"/>
+                <mxCell id="9" value="&lt;h1&gt;PIN TYPES&lt;/h1&gt;&lt;br&gt;can be specified via format string&lt;br&gt;&quot;NAME:TYPE&quot;&lt;br&gt;in the properties.&lt;br&gt;(multiple types can be set)&lt;br&gt;&lt;br&gt;You may specify multiple pins at once&lt;br&gt;(separated by comma)&lt;br&gt;or set a number of pins&lt;br&gt;and specify each pin on its own." style="externalPins=0;recursiveResize=0;shadow=0;dashed=0;align=center;html=1;strokeWidth=1;shape=mxgraph.rtl.abstract.entity;container=1;collapsible=0;drawPins=1;leftArr=no style,input:i,input:in,clock:c,clock:clk,clock:clock,negated clock:nclk,negated clock:nclock,not connected:nc;rightArr=output:o,output:out,input%2Foutput%3Aio,input/output:inout,multiple%20types%3Anc%3An%3Aclk;left=9;right=5;topArr=1,2,3,4;top=you,may,set,multiple,pins,at,once;bottom=6;bottomArr=no pin:no,no pin:np,no pin:nopin,negated:n,negated:neg,negated:not;topRot=240;topAnchor=right;bottomRot=30;sketch=1;" parent="1" vertex="1">
+                    <mxGeometry x="225" y="210" width="400" height="540" as="geometry"/>
+                </mxCell>
+            </root>
+        </mxGraphModel>
+    </diagram>
+</mxfile>

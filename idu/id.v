@@ -62,10 +62,13 @@ always @(*) begin
 
     o_imm=32'b0;
 
-    // case (param)
-    //     : 
-    //     default: 
-    // endcase
+    //Table 24.1: RISC-V base opcode map, inst[1:0]=11
+    case (opcode[6:5])
+        2'b00: begin
+            // aaa
+        end
+        default: 
+    endcase
 
     case (opcode)
         `INST_R_TYPE: begin//R型指令
