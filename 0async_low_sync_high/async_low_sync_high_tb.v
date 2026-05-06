@@ -31,7 +31,13 @@ begin
     // #(SYSCLK_PERIOD * 10 )
     #101
         NSYSRESET = 1'b1;
-    #1000
+    #100
+        NSYSRESET = 1'b0;
+    #54
+        NSYSRESET = 1'b1;
+    #100
+        NSYSRESET = 1'b0;
+
         $stop;
 end
 

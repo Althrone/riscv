@@ -28,7 +28,7 @@ always @(posedge i_clk or negedge i_signal) begin
     end
     else begin//i_signal处于上升沿或者高电平
         i_signal_s1 <=1'b1;
-        i_signal_s2 <=i_signal_s2;
+        i_signal_s2 <=i_signal_s1;
     end
 end
 

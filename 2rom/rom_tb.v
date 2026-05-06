@@ -1,7 +1,7 @@
 `timescale 1ns / 1ps
 // `include "pc.v"
 
-module pc_tb (
+module rom_tb (
     
 );
 
@@ -20,7 +20,6 @@ begin
     NSYSRESET = 1'b0;
     JP_EN = 1'b0;
     JP_ADDR = 32'h0000_0000;
-    pc = 32'h0000_0000;
 end
 
 // always #5 SYSCLK = ~SYSCLK;
@@ -29,7 +28,7 @@ end
 initial
 begin            
     $dumpfile("wave.vcd");        //生成的vcd文件名称
-    $dumpvars(0, pc_tb);    //tb模块名称
+    $dumpvars(0, rom_tb);    //tb模块名称
 end
 /*iverilog */
 
@@ -47,6 +46,7 @@ end
 always #(SYSCLK_PERIOD / 2.0) SYSCLK = ~SYSCLK;
 
 wire rst_pin;
+wire [31:0] data;
 
 pc pc_demo (
     // Inputs
@@ -63,6 +63,12 @@ async_low_sync_high reset_pin(
     .i_clk(SYSCLK),
     .i_signal(NSYSRESET),
     .o_signal(rst_pin)
+);
+
+rom rom_demo (
+    .i_clk(SYSCLK),
+    .i_addr(pc),
+    .o_data(data)
 );
     
 endmodule
