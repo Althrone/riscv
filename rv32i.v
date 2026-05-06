@@ -1,3 +1,73 @@
+//压缩指令集
+//Table 16.4: RVC opcode map
+`define C_ADDI4SPN_INST             5'b00000
+`define C_ADDI_INST                 5'b00001
+`define C_SLLI_INST                 5'b00010
+
+`define C_FLD3264_LQ128_INST        5'b00100
+`define C_JAL32_ADDIW64128_INST     5'b00101
+`define C_FLDSP3264_LQSP218_INST    5'b00110
+
+`define C_LW_INST                   5'b01000
+`define C_LI_INST                   5'b01001
+`define C_LWSP_INST                 5'b01010
+
+`define C_FLW32_LD64128_INST        5'b01100
+`define C_LUI_ADDI16SP_INST         5'b01101
+`define C_FLWSP32_LDSP64128_INST    5'b01110
+
+`define C_Reserved_INST             5'b10000
+`define C_MISC_ALU_INST             5'b10001
+`define C_JR_JALR_MV_ADD_INST       5'b10010
+
+`define C_FSD3264_SQ128_INST        5'b10100
+`define C_J_INST                    5'b10101
+`define C_FSDSP3264_SQSP128_INST    5'b10110
+
+`define C_SW_INST                   5'b11000
+`define C_BEQZ_INST                 5'b11001
+`define C_SWSP_INST                 5'b11010
+
+`define C_FSW32_SD64128_INST        5'b11100
+`define C_BNEZ_INST                 5'b11101
+`define C_FSWSP32_SDSP64128_INST    5'b11110
+
+//>16b
+`define INST_MORE_THAN_16B  2'b11
+//32b指令集
+`define INST_LOAD_TYPE      5'b00000
+`define INST_LOAD_FP_TYPE   5'b00001
+`define INST_custom_0_TYPE  5'b00010
+`define INST_MISC_MEM_TYPE  5'b00011
+`define INST_OP_IMM_TYPE    5'b00100
+`define INST_AUIPC_TYPE     5'b00101
+`define INST_OP_IMM_32_TYPE 5'b00110
+
+`define INST_STORE_TYPE     5'b01000
+`define INST_STORE_FP_TYPE  5'b01001
+`define INST_custom_1_TYPE  5'b01010
+`define INST_AMO_TYPE       5'b01011
+`define INST_OP_TYPE        5'b01100
+`define INST_LUI_TYPE       5'b01101
+`define INST_OP_32_TYPE     5'b01110
+
+`define INST_MADD_TYPE      5'b10000
+`define INST_MSUB_TYPE      5'b10001
+`define INST_NMSUB_TYPE     5'b10010
+`define INST_NMADD_TYPE     5'b10011
+`define INST_OP_FP_TYPE     5'b10100
+`define INST_reserved_TYPE  5'b10101
+`define INST_custom_2_TYPE  5'b10110
+
+`define INST_BRANCH_TYPE    5'b11000
+`define INST_JALR_TYPE      5'b11001
+`define INST_reserved_TYPE  5'b11010
+`define INST_JAL_TYPE       5'b11011
+`define INST_SYSTEM_TYPE    5'b11100
+`define INST_reserved_TYPE  5'b11101
+`define INST_custom_3_TYPE  5'b11110
+
+
 // R type inst
 `define INST_R_TYPE     7'b0110011  //10
 `define INST_ADD_SUB    3'b000      //把寄存器 x[rs2]加到寄存器 x[rs1]上，结果写入 x[rd]。忽略算术溢出
@@ -46,12 +116,13 @@
 `define INST_BGEU       3'b111
 
 // U type inst
-`define INST_LUI        7'b0110111
-`define INST_AUIPC      7'b0010111
+`define INST_LUI        { `INST_LUI_TYPE , `INST_MORE_THAN_16B }//7'b0110111
+`define INST_AUIPC      { `INST_AUIPC_TYPE , `INST_MORE_THAN_16B }//7'b0010111
 
 // J type inst
-`define INST_JAL        7'b1101111
-`define INST_JALR       7'b1100111
+`define INST_JAL        { `INST_JAL_TYPE , `INST_MORE_THAN_16B }//7'b1101111
+// I type inst
+`define INST_JALR       { `INST_JALR_TYPE , `INST_MORE_THAN_16B }//7'b1100111
 
 `define INST_FENCE  7'b0001111
 `define INST_ECALL  32'h73
