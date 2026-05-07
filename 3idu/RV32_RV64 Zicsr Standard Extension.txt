@@ -1,0 +1,9 @@
+RV32/RV64 Zicsr Standard Extension
+31     20   19 15   14  12  11 7    6    0
+imm[11:0]   rs1     funct3  rd      opcode  I-type
+csr         rs1     001     rd      1110011 CSRRW
+csr         rs1     010     rd      1110011 CSRRS
+csr         rs1     011     rd      1110011 CSRRC
+csr         uimm    101     rd      1110011 CSRRWI
+csr         uimm    110     rd      1110011 CSRRSI
+csr         uimm    111     rd      1110011 CSRRCI
