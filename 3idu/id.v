@@ -90,10 +90,36 @@ always @(*) begin
                     o_imm <= { {20{i_inst[31]}},i_inst[31:25],i_inst[11:7] };
                 end
                 `INST_OP_IMM: begin// I type
+                    case (funct3)
+                        `INST_ADDI,`INST_SLTI,`INST_SLTIU,`INST_XORI,`INST_ORI,`INST_ANDI: begin
+                            o_rs1_addr <= rs1;
+                            o_rs2_addr_shamt <= 0;
+                            o_rd_addr <= rd;
+                            o_imm <= { {20{i_inst[31]}},i_inst[31:20] };
+                        end
+                        `INST_SLLI: begin
+                            if (funct7 == 7'b0000000) begin
+                                o_rs1_addr <= rs1;
+                                o_rs2_addr_shamt <= rs2_shamt;//shamt
+                                o_rd_addr <= rd;
+                                o_imm <= 0;
+                            end
+                        end
+                        `INST_SRI: begin
+                            if (funct7 == `INST_SRLI||funct7 == `INST_SRAI) begin
+                                o_rs1_addr <= rs1;
+                                o_rs2_addr_shamt <= rs2_shamt;//shamt
+                                o_rd_addr <= rd;
+                                o_imm <= 0;
+                            end
+                        end
+                    endcase
+                end
+                `INST_OP: begin// R type
                     o_rs1_addr <= rs1;
-                    o_rs2_addr_shamt <= 0;
+                    o_rs2_addr_shamt <= rs2_shamt;//rs2
                     o_rd_addr <= rd;
-                    o_imm <= { {20{i_inst[31]}},i_inst[31:20] };
+                    o_imm <= 0;
                 end
             endcase
         end
