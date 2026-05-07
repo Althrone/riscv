@@ -32,42 +32,71 @@ module id (
     // output reg[`MEM_DATA_BUS] o_op1,//操作数1
     // output reg[`MEM_DATA_BUS] o_op2,//操作数2
 
-    output reg[`MEM_DATA_BUS] o_imm,//立即数
-
-    output reg[`REG_ADDR_BUS]   o_rd_addr,    // 输出目标寄存器地址
+    output reg[`MEM_DATA_BUS]   o_imm,      //立即数
+    output reg[`REG_ADDR_BUS]   o_rd_addr,  // 输出目标寄存器地址
 
     // to csr
     output wire[11:0] o_csr_addr//csr的地址
 );
+    wire[1:0] opcode_quadrant = i_inst[1:0];
     wire[6:0] opcode = i_inst[6:0];
     wire[2:0] funct3 = i_inst[14:12];
     wire[6:0] funct7 = i_inst[31:25];
     wire[4:0] rd = i_inst[11:7];
     wire[4:0] rs1 = i_inst[19:15];
     wire[4:0] rs2_shamt = i_inst[24:20];
-    //imm根据需要进行组合
-
-    //Table 24.1: RISC-V base opcode map, inst[1:0]=11
-    // wire[6:0] opcode = i_inst[6:0];
 
 always @(*) begin
-    //继续向后续模块传递
-//    o_inst = i_inst;
-    // o_inst_addr = i_inst_addr;
-    // reg1_rdata_o = reg1_rdata_i;
-    // reg2_rdata_o = reg2_rdata_i;
 
-    // o_op1=32'b0;
-    // o_op2=32'b0;
-
-    o_imm=32'b0;
-
-    //Table 24.1: RISC-V base opcode map, inst[1:0]=11
-    case (opcode[6:5])
-        2'b00: begin
-            // aaa
+    case (opcode_quadrant)
+        `RVC_QUADRANT_0,`RVC_QUADRANT_1,`RVC_QUADRANT_2: begin
+            // RVC指令 暂不实现
+            o_rs1_addr <= 0;
+            o_rs2_addr_shamt <= 0;
+            o_imm <= 0;
+            o_rd_addr <= 0;
         end
-        default: 
+        `INST_MORE_THAN_16B: begin
+            // 16B以上指令
+            case (opcode)
+                `INST_LUI,`INST_AUIPC: begin// U type
+                    o_rs1_addr <= 0;
+                    o_rs2_addr_shamt <= 0;
+                    o_rd_addr <= rd;
+                    o_imm <= {i_inst[31:12],12'b0};
+                end
+                `INST_JAL: begin// J type
+                    o_rs1_addr <= 0;
+                    o_rs2_addr_shamt <= 0;
+                    o_rd_addr <= rd;
+                    o_imm <= {i_inst[31],i_inst[19:12],i_inst[20],i_inst[30:21],1'b0};
+                end
+                `INST_JALR,`INST_LOAD: begin// I type
+                    o_rs1_addr <= rs1;
+                    o_rs2_addr_shamt <= 0;
+                    o_rd_addr <= rd;
+                    o_imm <= { {20{i_inst[31]}},i_inst[31:20] };
+                end
+                `INST_BRANCH: begin// B type
+                    o_rs1_addr <= rs1;
+                    o_rs2_addr_shamt <= rs2;
+                    o_rd_addr <= 0;
+                    o_imm <= { {20{i_inst[31]}},i_inst[7],i_inst[30:25],i_inst[11:8],1'b0 };
+                end
+                `INST_STORE: begin// S type
+                    o_rs1_addr <= rs1;
+                    o_rs2_addr_shamt <= rs2;
+                    o_rd_addr <= 0;
+                    o_imm <= { {20{i_inst[31]}},i_inst[31:25],i_inst[11:7] };
+                end
+                `INST_OP_IMM: begin// I type
+                    o_rs1_addr <= rs1;
+                    o_rs2_addr_shamt <= 0;
+                    o_rd_addr <= rd;
+                    o_imm <= { {20{i_inst[31]}},i_inst[31:20] };
+                end
+            endcase
+        end
     endcase
 
     case (opcode)
