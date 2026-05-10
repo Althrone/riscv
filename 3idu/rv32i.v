@@ -1,4 +1,5 @@
 `include "rvg.v"
+`include "rvc.v"
 
 // U type inst
 //7'b0110111
