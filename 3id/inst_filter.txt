@@ -1,0 +1,40 @@
+123452B7    lui x5, 0x12345
+ABCDE337    auipc x6, 0xABCDE
+001000EF    jal x1, 0x80000000
+00410067    jalr x0, x2, 4
+00419863    beq x3, x4, 0x00010000
+FE629EE3    bne x5, x6, 0xFFFFF000
+0083C663    blt x7, x8, 0x00000010
+00A55E63    bge x9, x10, 0x00000FF0
+00C5E663    bltu x11, x12, 0x00000020
+00E6FE63    bgeu x13, x14, 0x00000F00
+00080783    lb x15, 0(x16)
+00491883    lh x17, 4(x18)
+008A2983    lw x19, 8(x20)
+00CB4883    lbu x21, 12(x22)
+010C5983    lhu x23, 16(x24)
+019D0023    sb x25, 0(x26)
+01B12223    sh x27, 4(x28)
+01D12423    sw x29, 8(x30)
+80000F93    addi x31, x0, -2048
+00A12093    slti x1, x2, 10
+01423193    sltiu x3, x4, 20
+FFF34313    xori x5, x6, -1
+12346413    ori x7, x8, 0x123
+7FF57493    andi x9, x10, 0x7FF
+00561593    slli x11, x12, 5
+00A75693    srli x13, x14, 10
+41085813    srai x15, x16, 16
+013908B3    add x17, x18, x19
+416B0A33    sub x20, x21, x22
+019C1CB3    sll x23, x24, x25
+01CDCD33    slt x26, x27, x28
+01FEFEB3    sltu x29, x30, x31
+003140B3    xor x1, x2, x3
+0062D233    srl x4, x5, x6
+409453B3    sra x7, x8, x9
+00C5E533    or x10, x11, x12
+00F776B3    and x13, x14, x15
+0FF0000F    fence iorw, iorw
+00000073    ecall
+00100073    ebreak
