@@ -1,14 +1,12 @@
 #!/bin/bash
 
-
 SRC_DIR="1pc"
 TOP_MODULE="your_top_module"         # 必填
 WAVE_FILE="wave.vcd"
 
 # 编译所有 .v 文件，使用 -s 指定顶层模块
 SCRIPT_DIR="$(cd "$(dirname "$0")" && pwd)"
-# set -x
-iverilog -o $SCRIPT_DIR/wave -I"$SCRIPT_DIR/3id" $(find "$SCRIPT_DIR" -maxdepth 1 -type f -name "*.v") ./0async_low_sync_high/async_low_sync_high.v ./1pc/pc.v
+iverilog -I./3id -o $SCRIPT_DIR/wave $(find "$SCRIPT_DIR" -maxdepth 1 -type f -name "*.v") ./0async_low_sync_high/async_low_sync_high.v ./1pc/pc.v ./2rom/rom.v
 # iverilog -s "${TOP_MODULE}" -o sim_output $(find "${SRC_DIR}" -name "*.v") -Wall
 
 # 运行仿真，生成 .vcd 文件（已通过 $dumpfile 指定）

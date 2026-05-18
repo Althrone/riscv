@@ -1,5 +1,5 @@
 module rom(
-    input clk,
+    input i_clk,
 	input [31:0] i_addr,
 	output reg[31:0] o_data
 );
@@ -10,7 +10,7 @@ end
 
 reg [31:0] rom [0:4095];
 
-always @(posedge clk) begin
+always @(posedge i_clk) begin
 
 	o_data <= rom[i_addr[31:2]];
 
