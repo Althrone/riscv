@@ -1,11 +1,32 @@
 <mxfile host="65bd71144e">
     <diagram id="rqatVq7NdOueRoCgrMgU" name="Page-1">
-        <mxGraphModel dx="807" dy="428" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="850" pageHeight="1100" math="0" shadow="0">
+        <mxGraphModel dx="1380" dy="785" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="3300" pageHeight="4681" math="0" shadow="0">
             <root>
                 <mxCell id="0"/>
                 <mxCell id="1" parent="0"/>
-                <mxCell id="9" value="&lt;h1&gt;PIN TYPES&lt;/h1&gt;&lt;br&gt;can be specified via format string&lt;br&gt;&quot;NAME:TYPE&quot;&lt;br&gt;in the properties.&lt;br&gt;(multiple types can be set)&lt;br&gt;&lt;br&gt;You may specify multiple pins at once&lt;br&gt;(separated by comma)&lt;br&gt;or set a number of pins&lt;br&gt;and specify each pin on its own." style="externalPins=0;recursiveResize=0;shadow=0;dashed=0;align=center;html=1;strokeWidth=1;shape=mxgraph.rtl.abstract.entity;container=1;collapsible=0;drawPins=1;leftArr=no style,input:i,input:in,clock:c,clock:clk,clock:clock,negated clock:nclk,negated clock:nclock,not connected:nc;rightArr=output:o,output:out,input%2Foutput%3Aio,input/output:inout,multiple%20types%3Anc%3An%3Aclk;left=9;right=5;topArr=1,2,3,4;top=you,may,set,multiple,pins,at,once;bottom=6;bottomArr=no pin:no,no pin:np,no pin:nopin,negated:n,negated:neg,negated:not;topRot=240;topAnchor=right;bottomRot=30;sketch=1;" parent="1" vertex="1">
-                    <mxGeometry x="225" y="210" width="400" height="540" as="geometry"/>
+                <mxCell id="25" value="&lt;h1&gt;Decode&lt;/h1&gt;" style="externalPins=0;recursiveResize=0;shadow=0;dashed=0;align=center;html=1;strokeWidth=1;shape=mxgraph.rtl.abstract.entity;container=1;collapsible=0;drawPins=1;leftArr=inst%3Ain;rightArr=opcode%3Aout,funct3%3Aout,funct7%3Aout,rs1_addr%3Aout,rs2_addr%3Aout,rd_addr%3Aout,imm%3Aout;left=1;right=7;topArr=1,2,3,4;top=0;bottom=0;bottomArr=no pin:no,no pin:np,no pin:nopin,negated:n,negated:neg,negated:not;topRot=240;topAnchor=right;bottomRot=30;" vertex="1" parent="1">
+                    <mxGeometry x="340" y="240" width="230" height="240" as="geometry"/>
+                </mxCell>
+                <mxCell id="27" value="&lt;h1&gt;Regs&lt;/h1&gt;" style="externalPins=0;recursiveResize=0;shadow=0;dashed=0;align=center;html=1;strokeWidth=1;shape=mxgraph.rtl.abstract.entity;container=1;collapsible=0;drawPins=1;leftArr=rs1_addr%3Ain,rs2_addr%3Ain,nrst%3An,clock:c;rightArr=rs1_data%3Aout,rs2_data%3Aout,input/output:io,input%2Foutput%3Ainout,multiple types:nc:n:clk;left=4;right=2;topArr=1,2,3,4;top=0;bottom=0;bottomArr=no pin:no,no pin:np,no pin:nopin,negated:n,negated:neg,negated:not;topRot=240;topAnchor=right;bottomRot=30;" vertex="1" parent="1">
+                    <mxGeometry x="770" y="330" width="230" height="100" as="geometry"/>
+                </mxCell>
+                <mxCell id="28" style="edgeStyle=orthogonalEdgeStyle;html=1;exitX=0;exitY=0;exitDx=230;exitDy=120;exitPerimeter=0;entryX=0;entryY=0;entryDx=0;entryDy=20;entryPerimeter=0;" edge="1" parent="1" source="25" target="27">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="29" style="edgeStyle=orthogonalEdgeStyle;html=1;exitX=0;exitY=0;exitDx=230;exitDy=150;exitPerimeter=0;entryX=0;entryY=0;entryDx=0;entryDy=40;entryPerimeter=0;" edge="1" parent="1" source="25" target="27">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="30" value="&lt;h1&gt;ID2EX&lt;/h1&gt;" style="externalPins=0;recursiveResize=0;shadow=0;dashed=0;align=center;html=1;strokeWidth=1;shape=mxgraph.rtl.abstract.entity;container=1;collapsible=0;drawPins=1;leftArr=rs1_data%3Ain,rs2_data%3Ain,imm%3Ain;rightArr=opcode%3Aout,funct3%3Aout,funct7%3Aout,rs1_addr%3Aout,rs2_addr%3Aout,rd_addr%3Aout,imm%3Aout;left=3;right=7;topArr=1,2,3,4;top=0;bottom=0;bottomArr=no pin:no,no pin:np,no pin:nopin,negated:n,negated:neg,negated:not;topRot=240;topAnchor=right;bottomRot=30;" vertex="1" parent="1">
+                    <mxGeometry x="1070" y="260" width="230" height="240" as="geometry"/>
+                </mxCell>
+                <mxCell id="31" style="edgeStyle=orthogonalEdgeStyle;html=1;exitX=0;exitY=0;exitDx=230;exitDy=30;exitPerimeter=0;entryX=0;entryY=0;entryDx=0;entryDy=60;entryPerimeter=0;" edge="1" parent="1" source="27" target="30">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="32" style="edgeStyle=orthogonalEdgeStyle;html=1;exitX=0;exitY=0;exitDx=230;exitDy=60;exitPerimeter=0;entryX=0;entryY=0;entryDx=0;entryDy=120;entryPerimeter=0;" edge="1" parent="1" source="27" target="30">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="33" style="edgeStyle=orthogonalEdgeStyle;html=1;exitX=0;exitY=0;exitDx=230;exitDy=210;exitPerimeter=0;entryX=0;entryY=0;entryDx=0;entryDy=180;entryPerimeter=0;" edge="1" parent="1" source="25" target="30">
+                    <mxGeometry relative="1" as="geometry"/>
                 </mxCell>
             </root>
         </mxGraphModel>
